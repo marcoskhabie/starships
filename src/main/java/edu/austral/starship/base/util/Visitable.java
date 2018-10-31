@@ -1,4 +1,4 @@
-package edu.austral.starship.base.model;
+package edu.austral.starship.base.util;
 
 import edu.austral.starship.base.util.Visitor;
 

@@ -1,5 +1,6 @@
 package edu.austral.starship.base.model;
 
+import edu.austral.starship.base.collision.CollisionHandler;
 import edu.austral.starship.base.util.Visitor;
 import edu.austral.starship.base.vector.Vector2;
 
@@ -76,5 +77,30 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
 
     public void setSelectedGun(Gun selectedGun) {
         this.selectedGun = selectedGun;
+    }
+
+    @Override
+    public void handleCollision(CollisionHandler collisionHandler) {
+        collisionHandler.handleSpaceship(this);
+    }
+
+    @Override
+    public void handleAsteroid(Asteroid asteroid) {
+
+    }
+
+    @Override
+    public void handleSpaceship(Spaceship spaceship) {
+
+    }
+
+    @Override
+    public void handleABullet(Bullet bullet) {
+
+    }
+
+    @Override
+    public void advance() {
+
     }
 }

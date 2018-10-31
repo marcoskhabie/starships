@@ -1,8 +1,10 @@
 package edu.austral.starship.base.model;
 
+import edu.austral.starship.base.collision.CollisionHandler;
+import edu.austral.starship.base.util.Visitable;
 import edu.austral.starship.base.vector.Vector2;
 
-public abstract class Entity implements Visitable {
+public abstract class Entity implements Visitable, CollisionHandler {
     private Vector2 direction;
     private Vector2 position;
     private double health;
@@ -13,6 +15,10 @@ public abstract class Entity implements Visitable {
         this.health = health;
     }
 
+
+    public void advance() {
+        position= position.add(direction);
+    }
 
     public Vector2 getDirection() {
         return direction;
