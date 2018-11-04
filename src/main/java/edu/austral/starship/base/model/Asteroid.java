@@ -10,6 +10,8 @@ public class Asteroid extends Entity {
     }
 
 
+
+
     @Override
     public void accepts(Visitor visitor) {
         visitor.visitAsteroid(this);

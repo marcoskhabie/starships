@@ -43,5 +43,12 @@ public abstract class Entity implements Visitable, CollisionHandler {
     public void setHealth(double health) {
         this.health = health;
     }
+
+    public  boolean isOutOfBounds(float width,float height){
+      if (position.getX()>width+50||position.getX()<-50||position.getY()>height+50||position.getY()<-50){
+          return true;
+      }
+      else return false;
+    }
 }
 

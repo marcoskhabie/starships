@@ -7,6 +7,9 @@ public class MoveLeft implements Function {
     @Override
     public void action(PlayerSpaceship playerSpaceship) {
         Vector2 actualPosition= playerSpaceship.getSpaceship().getPosition();
-        playerSpaceship.getSpaceship().setPosition(actualPosition.add(new Vector2(-1,0)));
+        Vector2 actualDirection= playerSpaceship.getSpaceship().getDirection().unitary();
+//        playerSpaceship.getSpaceship().setPosition(actualPosition.add(new Vector2(-1,0)));
+        playerSpaceship.getSpaceship().setDirection(actualDirection.add(Vector2.vectorFromModule(actualDirection.module(), (float) (actualDirection.angle()-0.1)).unitary()));
+
     }
 }

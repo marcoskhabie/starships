@@ -13,6 +13,7 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
     private List<SpaceshipObserver> observers;
     private List<Gun> guns;
     private Gun selectedGun;
+    private float velocity=0;
 
     public Spaceship(Vector2 direction, Vector2 position, double health) {
         super(direction, position, health);
@@ -102,5 +103,23 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
     @Override
     public void advance() {
 
+    }
+
+    public void addVelocity(){
+        if (velocity<5){
+            velocity= (float) (velocity+0.1);
+        }
+    }
+    @Override
+    public boolean isOutOfBounds(float width, float height) {
+        return false;
+    }
+
+    public float getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(float velocity) {
+        this.velocity = velocity;
     }
 }

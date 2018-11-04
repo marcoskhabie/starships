@@ -1,16 +1,17 @@
 package edu.austral.starship.base.controlers;
 
-import edu.austral.starship.base.model.Entity;
-import edu.austral.starship.base.model.Player;
-import edu.austral.starship.base.model.PlayerSpaceship;
+import edu.austral.starship.base.model.*;
+import edu.austral.starship.base.util.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Map {
+public class Map implements Visitor {
 
-    List<Entity> entities;
-    List<PlayerSpaceship> playerSpaceships;
+    private List<Entity> entities;
+    private List<PlayerSpaceship> playerSpaceships;
+    private int amountOfAsteroids=0;
+
 
     public Map(List<Entity> entities, List<PlayerSpaceship> playerSpaceships) {
         this.entities = entities;
@@ -26,10 +27,20 @@ public class Map {
         entities.add(entity);
     }
 
+    public void addAsteroid(Asteroid asteroid){
+        entities.add(asteroid);
+        amountOfAsteroids++;
+    }
+
     public void deleteEntity(Entity entity){
+
         entities.remove(entity);
     }
 
+    public void deleteAsteroid(Asteroid asteroid){
+        entities.remove(asteroid);
+        amountOfAsteroids--;
+    }
     public void addPlayer(PlayerSpaceship playerSpaceship){
         playerSpaceships.add(playerSpaceship);
 
@@ -59,5 +70,28 @@ public class Map {
         for (Entity e:entities) {
             e.advance();
         }
+    }
+
+    public int getAmountOfAsteroids() {
+        return amountOfAsteroids;
+    }
+
+    public void setAmountOfAsteroids(int amountOfAsteroids) {
+        this.amountOfAsteroids = amountOfAsteroids;
+    }
+
+    @Override
+    public void visitSS(Spaceship spaceship) {
+        deleteEntity(spaceship);
+    }
+
+    @Override
+    public void visitAsteroid(Asteroid asteroid) {
+        deleteAsteroid(asteroid);
+    }
+
+    @Override
+    public void visitBullet(Bullet bullet) {
+        deleteEntity(bullet);
     }
 }

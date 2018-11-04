@@ -28,12 +28,15 @@ public class Vector2 {
         return new Vector2(x / module, y / module);
     }
 
-    float angle() {return (float) (atan2(y, x) - atan2(0, 1));}
+    public float angle() {return (float) (atan2(y, x) - atan2(0, 1));}
 
     public static Vector2 vector(float x, float y) {return new Vector2(x, y);}
 
     public static Vector2 vectorFromModule(float module, float angle) {
         return new Vector2((float) (module * cos(angle)), (float) (module * sin(angle)));
+    }
+    public Vector2 inverse(){
+        return new Vector2(-x,-y);
     }
 
     public float getX() {
