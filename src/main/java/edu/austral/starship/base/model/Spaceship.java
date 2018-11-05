@@ -13,7 +13,7 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
     private List<SpaceshipObserver> observers;
     private List<Gun> guns;
     private Gun selectedGun;
-    private float velocity=0;
+    private float velocity=1;
 
     public Spaceship(Vector2 direction, Vector2 position, double health) {
         super(direction, position, health);
@@ -35,12 +35,12 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
     }
 
     @Override
-    public void notifyEvent() {
-
+    public void notifyEvent(double damage) {
         for (SpaceshipObserver o:observers) {
-            o.UpdateSpaceship();
+            o.UpdateSpaceship(damage);
         }
     }
+
 
     public Spaceship(Vector2 direction, Vector2 position, double health, List<SpaceshipObserver> observers, List<Gun> guns, Gun selectedGun) {
         super(direction, position, health);

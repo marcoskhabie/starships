@@ -12,4 +12,9 @@ public class MoveLeft implements Function {
         playerSpaceship.getSpaceship().setDirection(actualDirection.add(Vector2.vectorFromModule(actualDirection.module(), (float) (actualDirection.angle()-0.1)).unitary()));
 
     }
+
+    @Override
+    public void releaseAction(PlayerSpaceship playerSpaceship) {
+
+    }
 }

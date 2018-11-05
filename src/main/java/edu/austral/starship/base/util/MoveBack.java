@@ -14,6 +14,12 @@ public class MoveBack implements Function {
 //        playerSpaceship.getSpaceship().setDirection(actualDirection.add(actualDirection.inverse()).unitary());
         isOutOfBounds(playerSpaceship.getSpaceship());
     }
+
+    @Override
+    public void releaseAction(PlayerSpaceship playerSpaceship) {
+
+    }
+
     void isOutOfBounds(Spaceship spaceship){
         Vector2 actual=spaceship.getPosition();
         isOut(spaceship, actual);

@@ -1,6 +1,6 @@
 package edu.austral.starship.base.model;
 
-public class PlayerSpaceship {
+public class PlayerSpaceship implements SpaceshipObserver,BulletObserver {
 
     private Player player;
     private Spaceship spaceship;
@@ -24,5 +24,16 @@ public class PlayerSpaceship {
 
     public void setSpaceship(Spaceship spaceship) {
         this.spaceship = spaceship;
+    }
+
+    @Override
+    public void updateBullet(int score) {
+        player.setScore(player.getScore()+score);
+    }
+
+    @Override
+    public void UpdateSpaceship(double damage) {
+        spaceship.setHealth(spaceship.getHealth()-damage);
+
     }
 }

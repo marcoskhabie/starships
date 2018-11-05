@@ -1,5 +1,5 @@
 package edu.austral.starship.base.model;
 
 public interface SpaceshipObserver {
-    void UpdateSpaceship();
+    void UpdateSpaceship(double damage);
 }

@@ -21,5 +21,12 @@ public class MoveForward implements Function {
         MoveBack.isOut(spaceship,actualPosition);
     }
 
+    @Override
+    public void releaseAction(PlayerSpaceship playerSpaceship) {
+        playerSpaceship.getSpaceship().setVelocity(1);
+        action(playerSpaceship);
+
+    }
+
 
 }

@@ -35,4 +35,6 @@ public class BulletSimple extends Bullet {
     public void handleABullet(Bullet bullet) {
 
     }
+
+
 }

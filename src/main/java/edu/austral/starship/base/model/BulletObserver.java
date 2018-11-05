@@ -1,5 +1,5 @@
 package edu.austral.starship.base.model;
 
 public interface BulletObserver {
-    void updateBullet();
+    void updateBullet(int score);
 }

@@ -17,6 +17,12 @@ public class PlayerControler {
        }
     }
 
+    public void keyRleased(Integer key){
+        if (playerKeys.containsKey(key)){
+            playerKeys.get(key).releaseAction(playerSpaceship);
+        }
+    }
+
 
     public PlayerControler(Map<Integer, Function> playerKeys, PlayerSpaceship playerSpaceship) {
         this.playerKeys = playerKeys;
@@ -29,5 +35,13 @@ public class PlayerControler {
 
     public void setPlayerSpaceship(PlayerSpaceship playerSpaceship) {
         this.playerSpaceship = playerSpaceship;
+    }
+
+    public Map<Integer, Function> getPlayerKeys() {
+        return playerKeys;
+    }
+
+    public void setPlayerKeys(Map<Integer, Function> playerKeys) {
+        this.playerKeys = playerKeys;
     }
 }

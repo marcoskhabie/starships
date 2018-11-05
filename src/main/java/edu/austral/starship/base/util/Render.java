@@ -11,11 +11,15 @@ import processing.core.PImage;
 import java.util.HashMap;
 import java.util.List;
 
+import static java.lang.Math.cos;
+import static processing.core.PApplet.radians;
+
 public class Render implements Visitor {
 
     PGraphics graphics;
     PImage spaceshipImage;
     PImage asteroidImage;
+    PImage bulletImage;
 
 
     @Override
@@ -41,8 +45,10 @@ public class Render implements Visitor {
         graphics.pushMatrix();
         graphics.imageMode(PConstants.CENTER);
         graphics.translate(positionX, positionY);
-        float angle = (float) Math.PI/4;
+        float angle = (float)cos( Math.PI/42);
         graphics.rotate(angle);
+//        graphics.rotateY(radians(10));
+//        graphics.rotateX(radians(30));
         graphics.image(asteroidImage,0,0,50,50);
         graphics.popMatrix();
 //        generateRRAsteroid(asteroid);
@@ -50,7 +56,16 @@ public class Render implements Visitor {
 
     @Override
     public void visitBullet(Bullet bullet) {
-        generateRRBullet(bullet);
+
+        float positionX=bullet.getPosition().getX();
+        float positionY=bullet.getPosition().getY();
+
+        graphics.pushMatrix();
+        graphics.imageMode(PConstants.CENTER);
+        graphics.translate(positionX, positionY);
+        graphics.image(spaceshipImage,0,0,10,10);
+        graphics.popMatrix();
+//        generateRRBullet(bullet);
     }
 
     private RenderResult generateRRSpaceship(Spaceship spaceship){
@@ -73,6 +88,7 @@ public class Render implements Visitor {
         this.graphics =pGraphics;
         this.spaceshipImage =images.get("spaceship");
         this.asteroidImage =images.get("asteroid");
+        this.bulletImage =images.get("bullet");
         for (Entity entity: entities) {
             entity.accepts(this);
         }
