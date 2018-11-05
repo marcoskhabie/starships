@@ -40,7 +40,6 @@ public class CustomGameFramework implements GameFramework {
 //        windowsSettings.setSize((int)width, (int) height).enableHighPixelDensity();
 
 
-        Player player1 = new Player("Mark");
 
         Vector2 center= new Vector2(width/2,height/2);
         Vector2 up= new Vector2(0,-1);
@@ -52,10 +51,12 @@ public class CustomGameFramework implements GameFramework {
 //        }
 
         //player1
-        Spaceship spaceship= new Spaceship(up,center,100.0);
-        spaceship.setSelectedGun(new SimpleGun());
-        PlayerSpaceship playerSpaceship1=new PlayerSpaceship(player1,spaceship);
-        map.addEntity(spaceship);
+        Player player1 = new Player("Mark",Type.TYPE0);
+
+        Spaceship spaceship1= new Spaceship(up,center,100.0);
+        spaceship1.setSelectedGun(new SimpleGun());
+        PlayerSpaceship playerSpaceship1=new PlayerSpaceship(player1,spaceship1);
+        map.addEntity(spaceship1);
         map.addPlayer(playerSpaceship1);
         //player 1 keys
         HashMap<Integer, Function> player1Keys= new HashMap<>();
@@ -63,20 +64,41 @@ public class CustomGameFramework implements GameFramework {
         player1Keys.put(PConstants.DOWN,new MoveBack());
         player1Keys.put(PConstants.RIGHT,new MoveRight());
         player1Keys.put(PConstants.LEFT,new MoveLeft());
-        player1Keys.put(32,new Fire());
-
+        player1Keys.put(java.awt.event.KeyEvent.VK_SPACE,new Fire());
         playerControlerList.add(new PlayerControler(player1Keys,playerSpaceship1));
 
+        //player2
+        Player player2 = new Player("Marcos",Type.TYPE1);
+
+        Spaceship spaceship2= new Spaceship(up,center,100.0);
+        spaceship2.setSelectedGun(new SimpleGun());
+        PlayerSpaceship playerSpaceship2=new PlayerSpaceship(player2,spaceship2);
+        map.addEntity(spaceship2);
+        map.addPlayer(playerSpaceship2);
+        //player 2 keys
+        HashMap<Integer, Function> player2Keys= new HashMap<>();
+        player2Keys.put(java.awt.event.KeyEvent.VK_W,new MoveForward());
+        player2Keys.put(java.awt.event.KeyEvent.VK_S,new MoveBack());
+        player2Keys.put(java.awt.event.KeyEvent.VK_D,new MoveRight());
+        player2Keys.put(java.awt.event.KeyEvent.VK_A,new MoveLeft());
+        player2Keys.put(java.awt.event.KeyEvent.VK_SHIFT,new Fire());
+        playerControlerList.add(new PlayerControler(player2Keys,playerSpaceship2));
+
         //images
-        PImage spaceshipImage= imageLoader.load("/Users/marcoskhabie/projects/starships/src/main/java/edu/austral/starship/base/util/images/heroship.png");
+        PImage spaceshipImage1= imageLoader.load("/Users/marcoskhabie/projects/starships/src/main/java/edu/austral/starship/base/util/images/heroship.png");
+        PImage spaceshipImage2= imageLoader.load("/Users/marcoskhabie/projects/starships/src/main/java/edu/austral/starship/base/util/images/heroship.png");
         PImage asteroidImage= imageLoader.load("/Users/marcoskhabie/projects/starships/src/main/java/edu/austral/starship/base/util/images/Asteroid-PNG-Transparent.png");
         PImage bulletImage= imageLoader.load("/Users/marcoskhabie/projects/starships/src/main/java/edu/austral/starship/base/util/images/bullet1.png");
+
+        spaceshipImage2.filter(PConstants.INVERT);
 
         bg=imageLoader.load("/Users/marcoskhabie/projects/starships/src/main/java/edu/austral/starship/base/util/images/photo-1528484701073-2b22dc76649e.jpeg");
 //        bg=imageLoader.load("/Users/marcoskhabie/projects/starships/src/main/java/edu/austral/starship/base/util/images/Galaxy-Background-4-768x432.jpg");
         bg.resize((int)width, (int) height);
 
-        images.put("spaceship",spaceshipImage);
+
+        images.put("spaceship"+player1.getType(),spaceshipImage1);
+        images.put("spaceship"+ player2.getType(),spaceshipImage2);
         images.put("asteroid", asteroidImage);
         images.put("bullet", bulletImage);
 
@@ -89,9 +111,9 @@ public class CustomGameFramework implements GameFramework {
     public void draw(PGraphics graphics, float timeSinceLastDraw, Set<Integer> keySet) {
         List<Entity> entitiesToRemove=new ArrayList<>();
 
-//        graphics.background(bg);
-//        graphics.imageMode(PConstants.CENTER);
-graphics.background(255);
+        graphics.background(bg);
+        graphics.imageMode(PConstants.CENTER);
+//graphics.background(255);
         for (Integer key : keySet) {
 
             for (PlayerControler pc:playerControlerList) {

@@ -79,7 +79,7 @@ public class Render implements Visitor {
     }
 
     private RenderResult generateRRSpaceship(Spaceship spaceship){
-        PImage image= images.get("spaceship");
+        PImage image= images.get("spaceship"+ spaceship.getType());
         float size=50;
         Vector2 position= spaceship.getPosition();
         Shape shape= new Rectangle2D.Float(position.getX()-20,position.getY()+20,size-10,size-10);

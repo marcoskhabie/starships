@@ -1,6 +1,7 @@
 package edu.austral.starship.base.model;
 
 import edu.austral.starship.base.collision.CollisionHandler;
+import edu.austral.starship.base.util.Type;
 import edu.austral.starship.base.util.Visitor;
 import edu.austral.starship.base.vector.Vector2;
 
@@ -16,6 +17,7 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
     private List<Gun> guns;
     private Gun selectedGun;
     private float velocity=1;
+    private Type type;
 
     public Spaceship(Vector2 direction, Vector2 position, double health) {
         super(direction, position, health);
@@ -39,9 +41,9 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
     }
 
     @Override
-    public void notifyEvent(double damage) {
+    public void notifyEvent(double damage,Entity bullet) {
         for (SpaceshipObserver o:observers) {
-            o.UpdateSpaceship(damage);
+            o.UpdateSpaceship(damage,bullet);
         }
     }
 
@@ -91,8 +93,8 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
 
     @Override
     public void handleAsteroid(Asteroid asteroid) {
-        notifyEvent(10.0);
-        setHealth(getHealth()-10.0);
+        notifyEvent(10.0,asteroid);
+//        setHealth(getHealth()-10.0);
     }
 
     @Override
@@ -103,8 +105,9 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
     @Override
     public void handleABullet(Bullet bullet) {
         double damage=bullet.getDamage();
-        notifyEvent(damage);
-        this.setHealth(getHealth()-damage);
+        notifyEvent(damage,bullet);
+
+//        this.setHealth(getHealth()-damage);
     }
 
     @Override
@@ -131,5 +134,13 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
 
     public void setVelocity(float velocity) {
         this.velocity = velocity;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 }

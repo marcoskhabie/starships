@@ -27,13 +27,14 @@ public class Asteroid extends Entity {
     @Override
     public void handleAsteroid(Asteroid asteroid) {
        if (previousAsteroid != null) {
-           if (!previousAsteroid.equals(asteroid)) {
+           if (previousAsteroid !=(asteroid)) {
                if (asteroid.getDirection().equals(previousDirection)) {
                    setDirection(asteroid.getPreviousDirection());
                } else {
                    setDirection(asteroid.getDirection());
 
                }
+               previousAsteroid=asteroid;
            }
        }
        else {

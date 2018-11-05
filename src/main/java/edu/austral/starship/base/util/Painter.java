@@ -20,6 +20,7 @@ public class Painter implements Visitor{
     private List<RenderResult> renderResults=new ArrayList<>();
     private PGraphics graphics;
     private RenderResult actual;
+//    private float asteroidAngle = 0f;
 
     public void paint(List<RenderResult> renderResults, PGraphics graphics) {
         this.renderResults=renderResults;
@@ -55,8 +56,8 @@ public class Painter implements Visitor{
         graphics.pushMatrix();
         graphics.imageMode(PConstants.CENTER);
         graphics.translate(positionX, positionY);
-        float angle = (float)cos( Math.PI/42);
-        graphics.rotate(angle);
+//        asteroidAngle += 0.01;
+//        graphics.rotate(asteroidAngle);
         graphics.image(actual.getImage(),0,0,60,60);
         graphics.popMatrix();
     }

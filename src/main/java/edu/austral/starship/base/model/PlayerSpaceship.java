@@ -9,6 +9,7 @@ public class PlayerSpaceship implements SpaceshipObserver,BulletObserver {
         this.player = player;
         this.spaceship = spaceship;
         spaceship.addObserver(this);
+        spaceship.setType(player.getType());
     }
 
     public Player getPlayer() {
@@ -33,8 +34,17 @@ public class PlayerSpaceship implements SpaceshipObserver,BulletObserver {
     }
 
     @Override
-    public void UpdateSpaceship(double damage) {
-        spaceship.setHealth(spaceship.getHealth()-damage);
+    public void UpdateSpaceship(double damage,Entity entity) {
+        try {
+            Bullet bullet=(Bullet) entity;
+            if (!bullet.getObservers().contains(this)){
+                spaceship.setHealth(spaceship.getHealth()-damage);
+            }
+        }
+        catch (ClassCastException e){
+            spaceship.setHealth(spaceship.getHealth()-damage);
+        }
+
 
     }
 }
