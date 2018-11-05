@@ -5,11 +5,13 @@ import edu.austral.starship.base.model.Bullet;
 import edu.austral.starship.base.model.Entity;
 import edu.austral.starship.base.model.Spaceship;
 import edu.austral.starship.base.vector.Vector2;
+import javafx.scene.shape.Circle;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.core.PImage;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,6 +90,7 @@ public class Render implements Visitor {
         PImage image= images.get("asteroid");
         float size=50;
         Vector2 position= asteroid.getPosition();
+//        Shape shape=new Ellipse2D.Float(position.getX()-20,position.getY()+20,size-10,size-10);
         Shape shape= new Rectangle2D.Float(position.getX()-20,position.getY()+20,size-10,size-10);
         return new RenderResult(image,shape,asteroid);
     }

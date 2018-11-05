@@ -10,7 +10,7 @@ public class BulletSimple extends Bullet {
     public BulletSimple(Vector2 direction, Vector2 position, double health) {
 
         super(direction, position, health);
-        setDamage(20);
+        setDamage(100);
         setSize(10);
     }
 

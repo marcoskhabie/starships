@@ -99,7 +99,7 @@ graphics.background(255);
             }
         }
 
-        if (map.getAmountOfAsteroids()<20){
+        if (map.getAmountOfAsteroids()<10){
             map.addAsteroid(asteroidFactory.newAsteroid(width,height));
         }
 
