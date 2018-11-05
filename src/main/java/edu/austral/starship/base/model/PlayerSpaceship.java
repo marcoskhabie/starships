@@ -8,6 +8,7 @@ public class PlayerSpaceship implements SpaceshipObserver,BulletObserver {
     public PlayerSpaceship(Player player, Spaceship spaceship) {
         this.player = player;
         this.spaceship = spaceship;
+        spaceship.addObserver(this);
     }
 
     public Player getPlayer() {

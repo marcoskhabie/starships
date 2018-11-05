@@ -4,14 +4,14 @@ import java.util.Timer;
 
 public class SimpleGun extends Gun {
     public SimpleGun() {
-        super( 1000);
+        super( 400);
     }
 
 
     @Override
     public Bullet fireConcrete(PlayerSpaceship playerSpaceship) {
         Spaceship spaceship=playerSpaceship.getSpaceship();
-        Bullet result= new BulletSimple(spaceship.getDirection().multiply((float) 5),spaceship.getPosition(),spaceship.getHealth());
+        Bullet result= new BulletSimple(spaceship.getDirection().multiply((float) 5),spaceship.getPosition().add(spaceship.getDirection().multiply((float) 26)),spaceship.getHealth());
         result.addObserver(playerSpaceship);
         return result;
     }

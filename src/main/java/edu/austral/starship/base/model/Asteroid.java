@@ -20,21 +20,21 @@ public class Asteroid extends Entity {
 
     @Override
     public void handleCollision(CollisionHandler collisionHandler) {
-
+        collisionHandler.handleAsteroid(this);
     }
 
     @Override
     public void handleAsteroid(Asteroid asteroid) {
-
+        setDirection(asteroid.getDirection());
     }
 
     @Override
     public void handleSpaceship(Spaceship spaceship) {
-
+       setHealth(0.0);
     }
 
     @Override
     public void handleABullet(Bullet bullet) {
-
+        setHealth(getHealth()-bullet.getDamage());
     }
 }

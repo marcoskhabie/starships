@@ -8,7 +8,10 @@ public class BulletSimple extends Bullet {
 
 
     public BulletSimple(Vector2 direction, Vector2 position, double health) {
+
         super(direction, position, health);
+        setDamage(20);
+        setSize(10);
     }
 
     @Override
@@ -16,25 +19,7 @@ public class BulletSimple extends Bullet {
         visitor.visitBullet(this);
     }
 
-    @Override
-    public void handleCollision(CollisionHandler collisionHandler) {
 
-    }
-
-    @Override
-    public void handleAsteroid(Asteroid asteroid) {
-
-    }
-
-    @Override
-    public void handleSpaceship(Spaceship spaceship) {
-
-    }
-
-    @Override
-    public void handleABullet(Bullet bullet) {
-
-    }
 
 
 }

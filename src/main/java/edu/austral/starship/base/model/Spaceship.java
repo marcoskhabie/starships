@@ -7,6 +7,8 @@ import edu.austral.starship.base.vector.Vector2;
 import java.util.ArrayList;
 import java.util.List;
 
+import static edu.austral.starship.base.controlers.CustomGameFramework.map;
+
 public class Spaceship extends Entity implements SpaceshipObservable  {
 
 
@@ -17,6 +19,8 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
 
     public Spaceship(Vector2 direction, Vector2 position, double health) {
         super(direction, position, health);
+        observers=new ArrayList<>();
+        guns=new ArrayList<>();
     }
 
     @Override
@@ -87,7 +91,8 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
 
     @Override
     public void handleAsteroid(Asteroid asteroid) {
-
+        notifyEvent(10.0);
+        setHealth(getHealth()-10.0);
     }
 
     @Override
@@ -97,11 +102,16 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
 
     @Override
     public void handleABullet(Bullet bullet) {
-
+        double damage=bullet.getDamage();
+        notifyEvent(damage);
+        this.setHealth(getHealth()-damage);
     }
 
     @Override
     public void advance() {
+//        if (getHealth()<=0.0){
+//            map.deleteEntity(this);
+//        }
 
     }
 

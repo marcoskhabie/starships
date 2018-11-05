@@ -19,9 +19,9 @@ public class CustomGameFramework implements GameFramework {
     private int y=0;
     private int number=0;
     private List<PlayerControler> playerControlerList=new ArrayList<>();
-    private CollisionEngine collisionEngine= new CollisionEngine();
+    private CollisionEngine<RenderResult> collisionEngine= new CollisionEngine<>();
     private Painter painter;
-    private Render render= new Render();
+    private Render render;
     private AsteroidFactory asteroidFactory=new AsteroidFactory();
     public static Map map= new Map();
     private HashMap<String,PImage> images= new HashMap();
@@ -75,13 +75,13 @@ public class CustomGameFramework implements GameFramework {
         bg=imageLoader.load("/Users/marcoskhabie/projects/starships/src/main/java/edu/austral/starship/base/util/images/photo-1528484701073-2b22dc76649e.jpeg");
 //        bg=imageLoader.load("/Users/marcoskhabie/projects/starships/src/main/java/edu/austral/starship/base/util/images/Galaxy-Background-4-768x432.jpg");
         bg.resize((int)width, (int) height);
-        System.out.println(bg.pixelDensity);
 
         images.put("spaceship",spaceshipImage);
         images.put("asteroid", asteroidImage);
         images.put("bullet", bulletImage);
 
-        painter=new Painter(images);
+        render=new Render(images);
+        painter=new Painter();
 
     }
 
@@ -89,9 +89,9 @@ public class CustomGameFramework implements GameFramework {
     public void draw(PGraphics graphics, float timeSinceLastDraw, Set<Integer> keySet) {
         List<Entity> entitiesToRemove=new ArrayList<>();
 
-        graphics.background(bg);
-        graphics.imageMode(PConstants.CENTER);
-
+//        graphics.background(bg);
+//        graphics.imageMode(PConstants.CENTER);
+graphics.background(255);
         for (Integer key : keySet) {
 
             for (PlayerControler pc:playerControlerList) {
@@ -106,7 +106,7 @@ public class CustomGameFramework implements GameFramework {
 
 
         for (Entity entity :map.getEntities()) {
-            if (entity.isOutOfBounds(width,height)){
+            if (entity.isOutOfBounds(width,height)||(entity.getHealth()<=0.0)){
                 entitiesToRemove.add(entity);
             }
                 entity.advance();
@@ -117,9 +117,12 @@ public class CustomGameFramework implements GameFramework {
         }
 
 
-        render.paint(map.getEntities(),graphics,images);
+//        render.paint(map.getEntities(),graphics,images);
+        List <RenderResult> renderResults=render.render(map.getEntities());
 
-        painter.paint(map.getEntities(),graphics);
+        collisionEngine.checkCollisions(renderResults);
+
+        painter.paint(renderResults,graphics);
 
 //        graphics.rect(x,y, 20,20);
 //        graphics.rect(20,10,10,10);
