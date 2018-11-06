@@ -10,5 +10,11 @@ public class ImageLoader {
 
     public PImage load(String fileName) { return applet.loadImage(fileName); }
 
-    public PImage load(String fileName, String extension) { return applet.loadImage(fileName, extension); }
+    public PApplet getApplet() {
+        return applet;
+    }
+
+    public PImage load(String fileName, String extension) { return applet.loadImage(fileName, extension);
+
+    }
 }

@@ -11,7 +11,6 @@ import java.util.List;
 public abstract class Bullet extends Entity implements BulletObservable, CollisionHandler {
     private List<BulletObserver> observers=new ArrayList<>();
     private double damage;
-    private float size;
     private Type type;
 
 
@@ -90,14 +89,6 @@ public abstract class Bullet extends Entity implements BulletObservable, Collisi
 
     public void setDamage(double damage) {
         this.damage = damage;
-    }
-
-    public float getSize() {
-        return size;
-    }
-
-    public void setSize(float size) {
-        this.size = size;
     }
 
     public void accepts(Visitor visitor) {

@@ -12,7 +12,7 @@ public class ChangeSelectedGun implements Function {
     @Override
     public void action(PlayerSpaceship playerSpaceship) {
 
-        if (System.currentTimeMillis()-lastChange>100) {
+        if (System.currentTimeMillis()-lastChange>300) {
 
 
             Spaceship spaceship = playerSpaceship.getSpaceship();

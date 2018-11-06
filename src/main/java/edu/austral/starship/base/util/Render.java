@@ -80,7 +80,7 @@ public class Render implements Visitor {
 
     private RenderResult generateRRSpaceship(Spaceship spaceship){
         PImage image= images.get("spaceship"+ spaceship.getType());
-        float size=50;
+        float size=spaceship.getSize();
         Vector2 position= spaceship.getPosition();
         Shape shape= new Rectangle2D.Float(position.getX()-((size-10)/2),position.getY()+((size-10)/2),size-10,size-10);
         return new RenderResult(image,shape,spaceship);
@@ -88,7 +88,7 @@ public class Render implements Visitor {
 
     private RenderResult generateRRAsteroid(Asteroid asteroid){
         PImage image= images.get("asteroid");
-        float size=50;
+        float size=asteroid.getSize();
         Vector2 position= asteroid.getPosition();
 //        Shape shape=new Ellipse2D.Float(position.getX()-20,position.getY()+20,size-10,size-10);
         Shape shape= new Rectangle2D.Float(position.getX()-((size-10)/2),position.getY()+((size-10)/2),size-10,size-10);

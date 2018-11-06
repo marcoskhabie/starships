@@ -38,6 +38,9 @@ public class PlayerSpaceship implements SpaceshipObserver,BulletObserver {
         if (!spaceship.isDead()){
             spaceship.setHealth(spaceship.getHealth()-damage);
             if (spaceship.getHealth()<=0.0){
+                for (Gun gun : spaceship.getGuns()) {
+                    gun.setMaxAmmo();
+                }
                 player.setLives(player.getLives()-1);
         }
 

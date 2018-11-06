@@ -5,7 +5,8 @@ import java.util.Timer;
 public class SimpleGun extends Gun {
     public SimpleGun() {
         super( 400);
-        setAmmo(99999);
+        setMaxAmmo();
+        setName("SIMPLE");
     }
 
 
@@ -16,4 +17,10 @@ public class SimpleGun extends Gun {
         result.addObserver(playerSpaceship);
         return result;
     }
+
+    @Override
+    public void setMaxAmmo() {
+        setAmmo(9999);
+    }
+
 }
