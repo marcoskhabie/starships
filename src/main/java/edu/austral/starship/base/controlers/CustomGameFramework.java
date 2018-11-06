@@ -59,6 +59,7 @@ public class CustomGameFramework implements GameFramework {
         Player player1 = new Player("PLAYER 1", TYPE0);
         List<Gun> guns1= new ArrayList<>();
         guns1.add(new SimpleGun());
+        guns1.add(new RapidGun());
         guns1.add(new MissileGun());
         Spaceship spaceship1= new Spaceship(up,center,MAX_HEALTH,guns1);
         PlayerSpaceship playerSpaceship1=new PlayerSpaceship(player1,spaceship1);
@@ -79,6 +80,7 @@ public class CustomGameFramework implements GameFramework {
         Player player2 = new Player("PLAYER 2", TYPE1);
         List<Gun> guns2= new ArrayList<>();
         guns2.add(new SimpleGun());
+        guns2.add(new RapidGun());
         guns2.add(new MissileGun());
         Spaceship spaceship2= new Spaceship(up,center,MAX_HEALTH,guns2);
         PlayerSpaceship playerSpaceship2=new PlayerSpaceship(player2,spaceship2);
@@ -153,6 +155,7 @@ public class CustomGameFramework implements GameFramework {
             e.accepts(map);
         }
 
+        //HANDLE BLINKING
         List<Entity> entitiesToBlink = map.getEntitiesToBlink();
 
         if (counter<30){
@@ -171,7 +174,6 @@ public class CustomGameFramework implements GameFramework {
                 blinkingCounter++;
             }
         }
-
 
         List <RenderResult> renderResults=render.render(entities);
 

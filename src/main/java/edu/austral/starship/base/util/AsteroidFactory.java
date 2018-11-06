@@ -49,6 +49,6 @@ public class AsteroidFactory {
 
         position= new Vector2(x,y);
         direction=new Vector2(xd,yd).unitary();
-        return new Asteroid(direction,position,100);
+        return new Asteroid(direction,position,500);
     }
 }

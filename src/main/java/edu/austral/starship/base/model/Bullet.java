@@ -80,7 +80,10 @@ public abstract class Bullet extends Entity implements BulletObservable, Collisi
 
     @Override
     public void handleABullet(Bullet bullet) {
-        this.setHealth(0.0);
+        if (!bullet.observers.equals(observers)){
+            this.setHealth(0.0);
+
+        }
     }
 
     public double getDamage() {

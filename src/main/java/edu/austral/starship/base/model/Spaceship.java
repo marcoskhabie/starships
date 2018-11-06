@@ -93,7 +93,7 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
 
     @Override
     public void handleAsteroid(Asteroid asteroid) {
-        notifyEvent(1000.0);
+        notifyEvent(100.0);
     }
 
     @Override
