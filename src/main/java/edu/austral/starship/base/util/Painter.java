@@ -70,6 +70,8 @@ public class Painter implements Visitor{
         graphics.pushMatrix();
         graphics.imageMode(PConstants.CENTER);
         graphics.translate(positionX, positionY);
+        float angle = (float) (bullet.getDirection().angle()+ Math.PI/2);
+        graphics.rotate(angle);
         graphics.image(actual.getImage(),0,0,bullet.getSize(),bullet.getSize());
         graphics.popMatrix();
     }

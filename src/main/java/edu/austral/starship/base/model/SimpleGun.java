@@ -5,6 +5,7 @@ import java.util.Timer;
 public class SimpleGun extends Gun {
     public SimpleGun() {
         super( 400);
+        setAmmo(99999);
     }
 
 

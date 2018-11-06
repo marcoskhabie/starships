@@ -8,6 +8,7 @@ public abstract class Entity implements Visitable, CollisionHandler {
     private Vector2 direction;
     private Vector2 position;
     private double health;
+    private boolean isDead=false;
 
     public Entity(Vector2 direction, Vector2 position, double health) {
         this.direction = direction;
@@ -49,6 +50,14 @@ public abstract class Entity implements Visitable, CollisionHandler {
           return true;
       }
       else return false;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
     }
 }
 

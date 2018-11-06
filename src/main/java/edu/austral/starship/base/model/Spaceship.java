@@ -41,18 +41,18 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
     }
 
     @Override
-    public void notifyEvent(double damage,Entity bullet) {
+    public void notifyEvent(double damage) {
         for (SpaceshipObserver o:observers) {
-            o.UpdateSpaceship(damage,bullet);
+            o.UpdateSpaceship(damage);
         }
     }
 
 
-    public Spaceship(Vector2 direction, Vector2 position, double health, List<SpaceshipObserver> observers, List<Gun> guns, Gun selectedGun) {
+    public Spaceship(Vector2 direction, Vector2 position, double health, List<Gun> guns) {
         super(direction, position, health);
-        this.observers = observers;
+        observers=new ArrayList<>();
         this.guns = guns;
-        this.selectedGun = selectedGun;
+        this.selectedGun = guns.get(0);
     }
 
     public Spaceship(Vector2 direction, Vector2 position, double health, List<Gun> guns, Gun selectedGun) {
@@ -93,8 +93,7 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
 
     @Override
     public void handleAsteroid(Asteroid asteroid) {
-        notifyEvent(10.0,asteroid);
-//        setHealth(getHealth()-10.0);
+        notifyEvent(10.0);
     }
 
     @Override
@@ -104,10 +103,11 @@ public class Spaceship extends Entity implements SpaceshipObservable  {
 
     @Override
     public void handleABullet(Bullet bullet) {
-        double damage=bullet.getDamage();
-        notifyEvent(damage,bullet);
-
-//        this.setHealth(getHealth()-damage);
+        PlayerSpaceship bulletObserver=(PlayerSpaceship)bullet.getObservers().get(0);
+        if (!observers.contains(bulletObserver)){
+            double damage=bullet.getDamage();
+            notifyEvent(damage);
+        }
     }
 
     @Override

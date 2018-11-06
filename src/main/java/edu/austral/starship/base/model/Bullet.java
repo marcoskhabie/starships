@@ -1,6 +1,8 @@
 package edu.austral.starship.base.model;
 
 import edu.austral.starship.base.collision.CollisionHandler;
+import edu.austral.starship.base.util.Type;
+import edu.austral.starship.base.util.Visitor;
 import edu.austral.starship.base.vector.Vector2;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ public abstract class Bullet extends Entity implements BulletObservable, Collisi
     private List<BulletObserver> observers=new ArrayList<>();
     private double damage;
     private float size;
+    private Type type;
 
 
     public Bullet(Vector2 direction, Vector2 position, double health) {
@@ -65,8 +68,15 @@ public abstract class Bullet extends Entity implements BulletObservable, Collisi
 
     @Override
     public void handleSpaceship(Spaceship spaceship) {
-        notifyEvent(2);
-        this.setHealth(0.0);
+        for (BulletObserver observer:
+             observers) {
+            PlayerSpaceship playerSpaceship=(PlayerSpaceship) observer;
+            if (!playerSpaceship.getSpaceship().equals(spaceship)){
+                notifyEvent(2);
+                this.setHealth(0.0);
+            }
+        }
+
     }
 
     @Override
@@ -88,5 +98,18 @@ public abstract class Bullet extends Entity implements BulletObservable, Collisi
 
     public void setSize(float size) {
         this.size = size;
+    }
+
+    public void accepts(Visitor visitor) {
+        visitor.visitBullet(this);
+    }
+
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 }

@@ -34,16 +34,15 @@ public class PlayerSpaceship implements SpaceshipObserver,BulletObserver {
     }
 
     @Override
-    public void UpdateSpaceship(double damage,Entity entity) {
-        try {
-            Bullet bullet=(Bullet) entity;
-            if (!bullet.getObservers().contains(this)){
-                spaceship.setHealth(spaceship.getHealth()-damage);
-            }
-        }
-        catch (ClassCastException e){
+    public void UpdateSpaceship(double damage) {
+        if (!spaceship.isDead()){
             spaceship.setHealth(spaceship.getHealth()-damage);
+            if (spaceship.getHealth()<=0.0){
+                player.setLives(player.getLives()-1);
         }
+
+       }
+
 
 
     }

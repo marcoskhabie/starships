@@ -1,5 +1,6 @@
 package edu.austral.starship.base.controlers;
 
+import com.sun.deploy.security.ValidationState;
 import edu.austral.starship.base.collision.CollisionEngine;
 import edu.austral.starship.base.framework.GameFramework;
 import edu.austral.starship.base.framework.ImageLoader;
@@ -13,6 +14,9 @@ import processing.core.PImage;
 import processing.event.KeyEvent;
 
 import java.util.*;
+
+import static edu.austral.starship.base.util.Type.TYPE0;
+import static edu.austral.starship.base.util.Type.TYPE1;
 
 public class CustomGameFramework implements GameFramework {
     private int x=0;
@@ -30,8 +34,12 @@ public class CustomGameFramework implements GameFramework {
     private int amountOfAsteroids=10;
     private PImage bg;
     private Random random=new Random();
+    private List<Entity> entities=new ArrayList<>();
 
 
+
+    int counter=0;
+    int blinkingCounter=0;
 
     @Override
     public void setup(WindowSettings windowsSettings, ImageLoader imageLoader) {
@@ -51,10 +59,11 @@ public class CustomGameFramework implements GameFramework {
 //        }
 
         //player1
-        Player player1 = new Player("Mark",Type.TYPE0);
-
-        Spaceship spaceship1= new Spaceship(up,center,100.0);
-        spaceship1.setSelectedGun(new SimpleGun());
+        Player player1 = new Player("MOMI", TYPE0);
+        List<Gun> guns1= new ArrayList<>();
+        guns1.add(new SimpleGun());
+        guns1.add(new MissileGun());
+        Spaceship spaceship1= new Spaceship(up,center,100.0,guns1);
         PlayerSpaceship playerSpaceship1=new PlayerSpaceship(player1,spaceship1);
         map.addEntity(spaceship1);
         map.addPlayer(playerSpaceship1);
@@ -65,13 +74,16 @@ public class CustomGameFramework implements GameFramework {
         player1Keys.put(PConstants.RIGHT,new MoveRight());
         player1Keys.put(PConstants.LEFT,new MoveLeft());
         player1Keys.put(java.awt.event.KeyEvent.VK_SPACE,new Fire());
+        player1Keys.put(java.awt.event.KeyEvent.VK_ALT,new ChangeSelectedGun());
+
         playerControlerList.add(new PlayerControler(player1Keys,playerSpaceship1));
 
         //player2
-        Player player2 = new Player("Marcos",Type.TYPE1);
-
-        Spaceship spaceship2= new Spaceship(up,center,100.0);
-        spaceship2.setSelectedGun(new SimpleGun());
+        Player player2 = new Player("JOACO", TYPE1);
+        List<Gun> guns2= new ArrayList<>();
+        guns2.add(new SimpleGun());
+        guns2.add(new MissileGun());
+        Spaceship spaceship2= new Spaceship(up,center,100.0,guns2);
         PlayerSpaceship playerSpaceship2=new PlayerSpaceship(player2,spaceship2);
         map.addEntity(spaceship2);
         map.addPlayer(playerSpaceship2);
@@ -82,13 +94,15 @@ public class CustomGameFramework implements GameFramework {
         player2Keys.put(java.awt.event.KeyEvent.VK_D,new MoveRight());
         player2Keys.put(java.awt.event.KeyEvent.VK_A,new MoveLeft());
         player2Keys.put(java.awt.event.KeyEvent.VK_SHIFT,new Fire());
+        player2Keys.put(java.awt.event.KeyEvent.VK_Q,new ChangeSelectedGun());
         playerControlerList.add(new PlayerControler(player2Keys,playerSpaceship2));
 
         //images
-        PImage spaceshipImage1= imageLoader.load("/Users/marcoskhabie/projects/starships/src/main/java/edu/austral/starship/base/util/images/heroship.png");
-        PImage spaceshipImage2= imageLoader.load("/Users/marcoskhabie/projects/starships/src/main/java/edu/austral/starship/base/util/images/heroship.png");
-        PImage asteroidImage= imageLoader.load("/Users/marcoskhabie/projects/starships/src/main/java/edu/austral/starship/base/util/images/Asteroid-PNG-Transparent.png");
-        PImage bulletImage= imageLoader.load("/Users/marcoskhabie/projects/starships/src/main/java/edu/austral/starship/base/util/images/bullet1.png");
+        PImage spaceshipImage1= imageLoader.load("edu/austral/starship/base/util/images/heroship.png");
+        PImage spaceshipImage2= imageLoader.load("edu/austral/starship/base/util/images/heroship.png");
+        PImage asteroidImage= imageLoader.load("edu/austral/starship/base/util/images/Asteroid-PNG-Transparent.png");
+        PImage bulletImage1= imageLoader.load("edu/austral/starship/base/util/images/bullet1.png");
+        PImage bulletImage2= imageLoader.load("edu/austral/starship/base/util/images/missile_PNG50.png");
 
         spaceshipImage2.filter(PConstants.INVERT);
 
@@ -100,7 +114,8 @@ public class CustomGameFramework implements GameFramework {
         images.put("spaceship"+player1.getType(),spaceshipImage1);
         images.put("spaceship"+ player2.getType(),spaceshipImage2);
         images.put("asteroid", asteroidImage);
-        images.put("bullet", bulletImage);
+        images.put("bullet" + TYPE0, bulletImage1);
+        images.put("bullet" + TYPE1, bulletImage2);
 
         render=new Render(images);
         painter=new Painter();
@@ -126,8 +141,9 @@ public class CustomGameFramework implements GameFramework {
         }
 
 
+        entities = map.getEntities();
 
-        for (Entity entity :map.getEntities()) {
+        for (Entity entity : entities) {
             if (entity.isOutOfBounds(width,height)||(entity.getHealth()<=0.0)){
                 entitiesToRemove.add(entity);
             }
@@ -139,13 +155,46 @@ public class CustomGameFramework implements GameFramework {
         }
 
 
-//        render.paint(map.getEntities(),graphics,images);
-        List <RenderResult> renderResults=render.render(map.getEntities());
 
-        collisionEngine.checkCollisions(renderResults);
+
+        if (counter<30){
+            for (Entity e : map.getEntitiesToBlink()) {
+                entities.remove(e);
+            }
+        }
+        else if (counter<=60){
+            for (Entity e : map.getEntitiesToBlink()) {
+                if (!entities.contains(e)){
+                    entities.add(e);
+                }
+            }
+            if (counter==60){
+                counter=0;
+                blinkingCounter++;
+            }
+        }
+
+//        render.paint(map.getEntities(),graphics,images);
+
+        List <RenderResult> renderResults=render.render(entities);
 
         painter.paint(renderResults,graphics);
 
+        collisionEngine.checkCollisions(renderResults);
+
+
+        if (blinkingCounter==4){
+            for (Entity e : map.getEntitiesToBlink()) {
+                e.setHealth(100);
+                e.setDead(false);
+                if (!entities.contains(e)){
+                    entities.add(e);
+                }
+            }
+            blinkingCounter=0;
+            map.getEntitiesToBlink().clear();
+        }
+        counter++;
 //        graphics.rect(x,y, 20,20);
 //        graphics.rect(20,10,10,10);
 //        graphics.text(number, 250, 100);
@@ -159,8 +208,7 @@ public class CustomGameFramework implements GameFramework {
 
     @Override
     public void keyReleased(KeyEvent event) {
-        for (PlayerControler p:playerControlerList
-             ) {
+        for (PlayerControler p:playerControlerList) {
             p.keyRleased(event.getKeyCode());
 
         }

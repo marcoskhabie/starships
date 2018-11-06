@@ -11,7 +11,7 @@ public class Map implements Visitor {
     private List<Entity> entities;
     private List<PlayerSpaceship> playerSpaceships;
     private int amountOfAsteroids=0;
-
+    private List<Entity> entitiesToBlink=new ArrayList<>();
 
     public Map(List<Entity> entities, List<PlayerSpaceship> playerSpaceships) {
         this.entities = entities;
@@ -82,7 +82,8 @@ public class Map implements Visitor {
 
     @Override
     public void visitSS(Spaceship spaceship) {
-        deleteEntity(spaceship);
+        spaceship.setDead(true);
+        entitiesToBlink.add(spaceship);
     }
 
     @Override
@@ -93,5 +94,14 @@ public class Map implements Visitor {
     @Override
     public void visitBullet(Bullet bullet) {
         deleteEntity(bullet);
+    }
+
+
+    public List<Entity> getEntitiesToBlink() {
+        return entitiesToBlink;
+    }
+
+    public void setEntitiesToBlink(List<Entity> entitiesToBlink) {
+        this.entitiesToBlink = entitiesToBlink;
     }
 }

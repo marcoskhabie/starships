@@ -10,9 +10,11 @@ public class Fire implements Function {
     @Override
     public void action(PlayerSpaceship playerSpaceship) {
         Gun gun =playerSpaceship.getSpaceship().getSelectedGun();
-        if (System.currentTimeMillis()-gun.getLastFire()>gun.getMillisUntilNext()){
-            Bullet bullet=gun.fire(playerSpaceship);
-            CustomGameFramework.map.addEntity(bullet);
+        if (gun.hasAmmo()) {
+            if (System.currentTimeMillis() - gun.getLastFire() > gun.getMillisUntilNext()) {
+                Bullet bullet = gun.fire(playerSpaceship);
+                CustomGameFramework.map.addEntity(bullet);
+            }
         }
 
     }

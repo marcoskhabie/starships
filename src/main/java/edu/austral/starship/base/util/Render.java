@@ -82,7 +82,7 @@ public class Render implements Visitor {
         PImage image= images.get("spaceship"+ spaceship.getType());
         float size=50;
         Vector2 position= spaceship.getPosition();
-        Shape shape= new Rectangle2D.Float(position.getX()-20,position.getY()+20,size-10,size-10);
+        Shape shape= new Rectangle2D.Float(position.getX()-((size-10)/2),position.getY()+((size-10)/2),size-10,size-10);
         return new RenderResult(image,shape,spaceship);
     }
 
@@ -91,15 +91,15 @@ public class Render implements Visitor {
         float size=50;
         Vector2 position= asteroid.getPosition();
 //        Shape shape=new Ellipse2D.Float(position.getX()-20,position.getY()+20,size-10,size-10);
-        Shape shape= new Rectangle2D.Float(position.getX()-20,position.getY()+20,size-10,size-10);
+        Shape shape= new Rectangle2D.Float(position.getX()-((size-10)/2),position.getY()+((size-10)/2),size-10,size-10);
         return new RenderResult(image,shape,asteroid);
     }
 
     private RenderResult generateRRBullet(Bullet bullet){
-        PImage image= images.get("bullet");
+        PImage image= images.get("bullet"+bullet.getType());
         Vector2 position= bullet.getPosition();
         float size=bullet.getSize();
-        Shape shape= new Rectangle2D.Float(position.getX()-(float) 2.5,position.getY()+(float) 2.5,size-5,size-5);
+        Shape shape= new Rectangle2D.Float(position.getX()-((size-5)/2),position.getY()+((size-5)/2),size-5,size-5);
         return new RenderResult(image,shape,bullet);
     }
 
