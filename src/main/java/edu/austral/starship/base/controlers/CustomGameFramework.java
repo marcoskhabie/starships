@@ -61,7 +61,7 @@ public class CustomGameFramework implements GameFramework {
         guns1.add(new SimpleGun());
         guns1.add(new RapidGun());
         guns1.add(new MissileGun());
-        Spaceship spaceship1= new Spaceship(up,center,MAX_HEALTH,guns1);
+        Spaceship spaceship1= new Spaceship(up,center.add(new Vector2(20,0)),MAX_HEALTH,guns1);
         PlayerSpaceship playerSpaceship1=new PlayerSpaceship(player1,spaceship1);
         map.addEntity(spaceship1);
         map.addPlayer(playerSpaceship1);
@@ -82,16 +82,16 @@ public class CustomGameFramework implements GameFramework {
         guns2.add(new SimpleGun());
         guns2.add(new RapidGun());
         guns2.add(new MissileGun());
-        Spaceship spaceship2= new Spaceship(up,center,MAX_HEALTH,guns2);
+        Spaceship spaceship2= new Spaceship(up,center.add(new Vector2(-20,0)),MAX_HEALTH,guns2);
         PlayerSpaceship playerSpaceship2=new PlayerSpaceship(player2,spaceship2);
         map.addEntity(spaceship2);
         map.addPlayer(playerSpaceship2);
         //player 2 keys
         HashMap<Integer, Function> player2Keys= new HashMap<>();
-        player2Keys.put(java.awt.event.KeyEvent.VK_W,new MoveForward());
-        player2Keys.put(java.awt.event.KeyEvent.VK_S,new MoveBack());
-        player2Keys.put(java.awt.event.KeyEvent.VK_D,new MoveRight());
-        player2Keys.put(java.awt.event.KeyEvent.VK_A,new MoveLeft());
+        player2Keys.put(java.awt.event.KeyEvent.VK_2,new MoveForward());
+        player2Keys.put(java.awt.event.KeyEvent.VK_4,new MoveBack());
+        player2Keys.put(java.awt.event.KeyEvent.VK_3,new MoveRight());
+        player2Keys.put(java.awt.event.KeyEvent.VK_1,new MoveLeft());
         player2Keys.put(java.awt.event.KeyEvent.VK_SHIFT,new Fire());
         player2Keys.put(java.awt.event.KeyEvent.VK_Q,new ChangeSelectedGun());
         playerControlerList.add(new PlayerControler(player2Keys,playerSpaceship2));
@@ -235,6 +235,9 @@ public class CustomGameFramework implements GameFramework {
     }
 
     private void reset(){
+        map.getEntities().clear();
+        map.getEntitiesToBlink().clear();
+        map.getPlayerSpaceships().clear();
         PApplet applet = imageLoader.getApplet();
         applet.settings();
         if (!applet.isLooping()) applet.loop();
